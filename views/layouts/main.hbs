@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DENO and HTMX</title>
+  <style>
+  section {
+    position: relative;
+    padding-right: 50px;
+    timeline-scope: --listTimeline;
+  }
+  .animation {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 100%;
+    background-size: 50px 40px;
+    /* background image on bottom of css for readability */
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #37392e;
+    background: #ddcecd;
+    font-family: "Poppins", sans-serif;
+  }
+  .list {
+    max-height: var(--container-height);
+    border: 2px solid #37392e;
+    border-radius: 5px;
+    scroll-snap-type: y mandatory;
+    overscroll-behavior-y: contain;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-timeline: --listTimeline block;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: #eee5e5;
+  }
+  li {
+    align-items: center;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    scroll-snap-align: start;
+  }
+  li:first-child {
+    border: 0;
+  }
+
+</style>
+</head>
+<body>
+  <h1>Users:</h1>
+  <input
+    type="search"
+    placeholder="Search..."
+    name="key"
+    hx-get="/search"
+    hx-trigger="keyup changed delay: 500ms"
+    hx-target="#main-view"
+  />
+  <div hx-get="/posts" hx-trigger="load" hx-target="#main-view">
+    <div id="main-view"></div>
+  </div>
+  <div class="animation"></div>
+</body>
+</html>
